@@ -37,7 +37,7 @@ func (t *Transfer) ReadPkg() (mes message.Message, err error) {
 	fmt.Println("pkgLen---->", pkgLen)
 
 	// 根据pkgLen的长度来读取数据,从conn中读取pkgLen那么多字节,放入buf中
-	n, err := t.Conn.Read(t.Buf[:pkgLen]) // 这里出错了,n返回的是0
+	n, err := t.Conn.Read(t.Buf[:pkgLen]) 
 	fmt.Println("n------->", n)
 	if n != int(pkgLen) {
 		// 说明丢包了

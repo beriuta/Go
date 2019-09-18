@@ -20,6 +20,9 @@ func ShowMenu() {
 	var loginkey int
 	var content string
 	fmt.Scanln(&loginkey)
+
+	// 因为会经常使用到SmsProcess实例,因此我们将其定义在switch外部
+	smsProcess := &SmsProcess{}
 	switch loginkey {
 	case 1:
 		// 显示在线用户列表
@@ -29,7 +32,9 @@ func ShowMenu() {
 		// 发送消息
 		fmt.Println("请输入你想对大家说的话:")
 		fmt.Scanln(&content)
-		
+		fmt.Println("你输入的内容是", content)
+		smsProcess.SendGroupMes(content)
+
 	case 3:
 		// 信息列表
 		fmt.Println("你选择了信息列表")
@@ -64,6 +69,9 @@ func ProcessServerMes(conn net.Conn) {
 			// 2. 把这个用户的信息,状态都保存到客户map中 [int]User
 			updateUserStatus(&notifyUserStatusMes)
 			fmt.Println("有人上线了")
+		case message.SmsMesType: // 有人群发消息了
+			fmt.Println("收到群发消息")
+			outputGroupMes(&mes)
 
 		default:
 			fmt.Println("服务器端返回了一个未知的消息类型")

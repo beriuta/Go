@@ -31,7 +31,7 @@ func (s *SmsProcess) SendGroupMes(content string) (err error) {
 	}
 	mes.Data = string(data)
 	// 4. 序列化最终消息
-	reData, err := json.Marshal(data)
+	reData, err := json.Marshal(mes)
 	if err != nil {
 		fmt.Println("序列化最终消息数据错误:", err)
 		return
